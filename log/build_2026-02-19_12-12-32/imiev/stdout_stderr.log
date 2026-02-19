@@ -1,0 +1,45 @@
+running develop
+running egg_info
+creating imiev.egg-info
+writing imiev.egg-info/PKG-INFO
+writing dependency_links to imiev.egg-info/dependency_links.txt
+writing entry points to imiev.egg-info/entry_points.txt
+writing requirements to imiev.egg-info/requires.txt
+writing top-level names to imiev.egg-info/top_level.txt
+writing manifest file 'imiev.egg-info/SOURCES.txt'
+reading manifest file 'imiev.egg-info/SOURCES.txt'
+writing manifest file 'imiev.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev.egg-link (link to .)
+Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+
+Installed /home/insia/simulador_ws/imiev/build/imiev
+running symlink_data
+creating /home/insia/simulador_ws/imiev/install/imiev/share/ament_index
+creating /home/insia/simulador_ws/imiev/install/imiev/share/ament_index/resource_index
+creating /home/insia/simulador_ws/imiev/install/imiev/share/ament_index/resource_index/packages
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/resource/imiev -> /home/insia/simulador_ws/imiev/install/imiev/share/ament_index/resource_index/packages
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/package.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev
+creating /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/launch/gps_waypoint_follower.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/launch/dual_ekf_navsat.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/launch/mapviz.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/launch/gazebo_model.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/launch/slam.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+creating /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/mapper_params_online_async.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/nav2_no_map_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/nav2_slam_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/imiev_bridge.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/dual_ekf_navsat_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/gps_wpf_demo.mvc -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+creating /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config/behavior_trees
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/config/behavior_trees/navigate_to_pose_ackermann.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config/behavior_trees
+creating /home/insia/simulador_ws/imiev/install/imiev/share/imiev/worlds
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/worlds/sonoma_raceway.world -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/worlds
+creating /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models
+creating /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/models/robot.xacro -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+symbolically linking /home/insia/simulador_ws/imiev/build/imiev/models/robot.gazebo -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev

@@ -1,0 +1,53 @@
+running develop
+Removing /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev.egg-link (link to .)
+running egg_info
+writing ../../build/imiev/imiev.egg-info/PKG-INFO
+writing dependency_links to ../../build/imiev/imiev.egg-info/dependency_links.txt
+writing entry points to ../../build/imiev/imiev.egg-info/entry_points.txt
+writing requirements to ../../build/imiev/imiev.egg-info/requires.txt
+writing top-level names to ../../build/imiev/imiev.egg-info/top_level.txt
+reading manifest file '../../build/imiev/imiev.egg-info/SOURCES.txt'
+writing manifest file '../../build/imiev/imiev.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/interactive_waypoint_follower.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/__init__.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/logged_waypoint_follower.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/gps_waypoint_logger.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils
+copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/utils/__init__.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils
+copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/utils/gps_utils.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils
+byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/interactive_waypoint_follower.py to interactive_waypoint_follower.cpython-312.pyc
+byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/logged_waypoint_follower.py to logged_waypoint_follower.cpython-312.pyc
+byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/gps_waypoint_logger.py to gps_waypoint_logger.cpython-312.pyc
+byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils/gps_utils.py to gps_utils.cpython-312.pyc
+running install_data
+copying resource/imiev -> /home/insia/simulador_ws/imiev/install/imiev/share/ament_index/resource_index/packages
+copying package.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev
+copying launch/gps_waypoint_follower.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+copying launch/dual_ekf_navsat.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+copying launch/mapviz.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+copying launch/gazebo_model.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+copying launch/slam.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+copying config/mapper_params_online_async.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+copying config/nav2_no_map_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+copying config/nav2_slam_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+copying config/imiev_bridge.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+copying config/dual_ekf_navsat_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+copying config/gps_wpf_demo.mvc -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+copying config/behavior_trees/navigate_to_pose_ackermann.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config/behavior_trees
+copying worlds/sonoma_raceway.world -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/worlds
+copying models/robot.xacro -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+copying models/robot.gazebo -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+running install_egg_info
+Copying ../../build/imiev/imiev.egg-info to /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info
+running install_scripts
+Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+writing list of installed files to '/home/insia/simulador_ws/imiev/build/imiev/install.log'
