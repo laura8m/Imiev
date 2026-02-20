@@ -1,0 +1,19 @@
+[1.637s] Invoking command in '/home/insia/simulador_ws/imiev/build/imiev': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/insia/simulador_ws/imiev/build/imiev/build --no-deps symlink_data
+[2.307s] running develop
+[2.770s] running egg_info
+[2.813s] writing imiev.egg-info/PKG-INFO
+[2.815s] writing dependency_links to imiev.egg-info/dependency_links.txt
+[2.815s] writing entry points to imiev.egg-info/entry_points.txt
+[2.816s] writing requirements to imiev.egg-info/requires.txt
+[2.816s] writing top-level names to imiev.egg-info/top_level.txt
+[2.904s] reading manifest file 'imiev.egg-info/SOURCES.txt'
+[2.907s] writing manifest file 'imiev.egg-info/SOURCES.txt'
+[2.955s] running build_ext
+[2.955s] Creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev.egg-link (link to .)
+[2.956s] Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.957s] Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.957s] Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.957s] 
+[2.958s] Installed /home/insia/simulador_ws/imiev/build/imiev
+[2.958s] running symlink_data
+[3.028s] Invoked command in '/home/insia/simulador_ws/imiev/build/imiev' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/insia/simulador_ws/imiev/build/imiev/build --no-deps symlink_data
