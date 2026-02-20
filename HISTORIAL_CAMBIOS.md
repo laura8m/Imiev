@@ -39,6 +39,11 @@ Este diario registra la evolución de la configuración del vehículo para facil
 - **Critic Rebalance**: `PathAlign: 14.0`, `Constraint: 4.0` (Basado en el archivo de referencia `nav2_params.yaml`).
 
 ### 🔄 Iteración Actual: Sintonización "Safe & Smooth"
-- **Suavizado de Temblores**: `temperature: 0.15` y ruidos (`vx_std: 0.2`, `wz_std: 0.4`) para eliminar micro-movimientos.
-- **Prioridad de Seguridad**: `CostCritic: 30.0` (Dobles de importancia que la ruta) para evitar cercanía excesiva al objeto.
-- **Inflación Progresiva**: Local `radius: 4.0m` con `scaling: 1.0` para una detección temprana y suave.
+- **Sintonización Suave y Segura**:
+    - `temperature: 0.15` y ruidos (`0.2`/`0.4`) para eliminar el "jitter" (movimientos cortos).
+    - `CostCritic: 30.0` y `PathAlignCritic: 10.0` para priorizar la seguridad sobre la ruta.
+    - Local Inflation: `4.0m` con `scaling: 1.0` para un margen de seguridad amplio y progresivo.
+- **Velocidad Dinámica**:
+    - Aumentado `vx_max` a 1.0m/s y `wz_max` a 1.0 rad/s para dar más "inercia" y autoridad al giro.
+- **Prioridad de Marcha Adelante**:
+    - `reverse_penalty: 5.0` (Global) y `PreferForwardCritic: 5.0` (Local) para forzar giros de frente en lugar de usar revesa tan fácilmente.
