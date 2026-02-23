@@ -34,6 +34,8 @@ setup(
             'interactive_waypoint_follower = imiev.interactive_waypoint_follower:main',
             'gps_waypoint_logger = imiev.gps_waypoint_logger:main',
             'logged_waypoint_follower = imiev.logged_waypoint_follower:main',
+            'route_logger = imiev.route_logger:main',
+            'route_follower = imiev.route_follower:main',
         ],
     },
 )

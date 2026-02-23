@@ -45,5 +45,6 @@ Este diario registra la evolución de la configuración del vehículo para facil
     - Local Inflation: `4.0m` con `scaling: 1.0` para un margen de seguridad amplio y progresivo.
 - **Velocidad Dinámica**:
     - Aumentado `vx_max` a 1.0m/s y `wz_max` a 1.0 rad/s para dar más "inercia" y autoridad al giro.
+    - **Corrección Bottleneck**: Detectado y eliminado límite de `0.26 m/s` en el `velocity_smoother`. Ahora el coche puede alcanzar su velocidad objetivo de 1.0m/s.
 - **Prioridad de Marcha Adelante**:
     - `reverse_penalty: 5.0` (Global) y `PreferForwardCritic: 5.0` (Local) para forzar giros de frente en lugar de usar revesa tan fácilmente.

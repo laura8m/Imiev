@@ -1,0 +1,26 @@
+[0.878s] Invoking command in '/home/insia/simulador_ws/imiev/src/imiev': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/imiev build --build-base /home/insia/simulador_ws/imiev/build/imiev/build install --record /home/insia/simulador_ws/imiev/build/imiev/install.log --single-version-externally-managed install_data
+[1.179s] running egg_info
+[1.203s] writing ../../build/imiev/imiev.egg-info/PKG-INFO
+[1.204s] writing dependency_links to ../../build/imiev/imiev.egg-info/dependency_links.txt
+[1.204s] writing entry points to ../../build/imiev/imiev.egg-info/entry_points.txt
+[1.204s] writing requirements to ../../build/imiev/imiev.egg-info/requires.txt
+[1.204s] writing top-level names to ../../build/imiev/imiev.egg-info/top_level.txt
+[1.256s] reading manifest file '../../build/imiev/imiev.egg-info/SOURCES.txt'
+[1.257s] writing manifest file '../../build/imiev/imiev.egg-info/SOURCES.txt'
+[1.258s] running build
+[1.258s] running build_py
+[1.258s] running install
+[1.264s] running install_lib
+[1.289s] running install_data
+[1.289s] copying config/nav2_no_map_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[1.290s] copying config/nav2_slam_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[1.290s] copying models/robot.xacro -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+[1.290s] running install_egg_info
+[1.316s] removing '/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info' (and everything under it)
+[1.317s] Copying ../../build/imiev/imiev.egg-info to /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info
+[1.317s] running install_scripts
+[1.477s] Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.478s] Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.478s] Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.478s] writing list of installed files to '/home/insia/simulador_ws/imiev/build/imiev/install.log'
+[1.502s] Invoked command in '/home/insia/simulador_ws/imiev/src/imiev' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/imiev build --build-base /home/insia/simulador_ws/imiev/build/imiev/build install --record /home/insia/simulador_ws/imiev/build/imiev/install.log --single-version-externally-managed install_data

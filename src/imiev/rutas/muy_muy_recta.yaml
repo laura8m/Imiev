@@ -1,0 +1,37 @@
+end:
+  latitude: 38.1625703692253
+  longitude: -122.45352432046863
+  yaw: 0.0
+start:
+  latitude: 38.162385846810565
+  longitude: -122.45335870939672
+  yaw: 0.0
+waypoints:
+- latitude: 38.162385846810565
+  longitude: -122.45335870939672
+  type: periodic
+  yaw: 0.0
+- latitude: 38.16241103954349
+  longitude: -122.45338511053518
+  type: periodic
+  yaw: 0.0
+- latitude: 38.16243473736535
+  longitude: -122.45343300447291
+  type: periodic
+  yaw: 0.0
+- latitude: 38.16245424390769
+  longitude: -122.45347037888818
+  type: periodic
+  yaw: 0.0
+- latitude: 38.16249769257962
+  longitude: -122.45347976287417
+  type: periodic
+  yaw: 0.0
+- latitude: 38.16253067748168
+  longitude: -122.45349743852266
+  type: periodic
+  yaw: 0.0
+- latitude: 38.162570127492415
+  longitude: -122.45352415552686
+  type: periodic
+  yaw: 0.0

@@ -60,23 +60,23 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.5
-      yaw_goal_tolerance: 0.5
+      xy_goal_tolerance: 1.0
+      yaw_goal_tolerance: 3.14
     # DWB parameters
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
-      time_steps: 56
+      time_steps: 80
       model_dt: 0.05
       batch_size: 2000
-      ax_max: 3.0
-      ax_min: -3.0
+      ax_max: 5.0
+      ax_min: -5.0
       ay_max: 3.0
-      az_max: 3.5
+      az_max: 5.0
       vx_std: 0.2
       vy_std: 0.2
       wz_std: 0.4
-      vx_max: 1.0
-      vx_min: -1.0
+      vx_max: 2.5
+      vx_min: -2.5
       vy_max: 0.0
       wz_max: 1.0
       iteration_count: 1
@@ -89,7 +89,7 @@ controller_server:
       regenerate_noises: true
       
       AckermannConstraints:
-        min_turning_r: 3.65
+        min_turning_r: 1.3
         
       TrajectoryVisualizer:
         trajectory_step: 5
@@ -121,7 +121,7 @@ controller_server:
       PreferForwardCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 5.0
+        cost_weight: 15.0
         
       TwirlingCritic:
         enabled: true
@@ -142,7 +142,7 @@ controller_server:
       PathAlignCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 10.0
+        cost_weight: 5.0
         max_path_occupancy_ratio: 0.05
         trajectory_point_step: 4
         threshold_to_consider: 0.5
@@ -251,7 +251,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 1.0
-        inflation_radius: 5.0
+        inflation_radius: 4.0
       always_send_full_costmap: True
 
 # The yaml_filename does not need to be specified since it going to be set by defaults in launch.
@@ -281,7 +281,7 @@ planner_server:
       angle_quantization_bins: 72
       analytic_expansion_ratio: 3.5
       analytic_expansion_max_length: 3.0
-      reverse_penalty: 5.0
+      reverse_penalty: 2.0
       change_penalty: 0.1
       non_straight_penalty: 1.0
       cost_travel_multiplier: 2.0
@@ -292,7 +292,7 @@ planner_server:
       max_on_approach_iterations: 2000
       max_planning_time: 10.0
       motion_model_for_search: "REEDS_SHEPP"
-      minimum_turning_radius: 3.65
+      minimum_turning_radius: 2.0
 
 smoother_server:
   ros__parameters:
@@ -354,10 +354,10 @@ velocity_smoother:
     smoothing_frequency: 10.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.26, 0.0, 1.0]
-    min_velocity: [-0.26, 0.0, -1.0]
-    max_accel: [2.5, 0.0, 3.2]
-    max_decel: [-2.5, 0.0, -3.2]
+    max_velocity: [2.5, 0.0, 2.0]
+    min_velocity: [-2.5, 0.0, -2.0]
+    max_accel: [5.0, 0.0, 5.0]
+    max_decel: [-5.0, 0.0, -5.0]
     odom_topic: "odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
