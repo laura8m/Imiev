@@ -27,22 +27,22 @@
   <xacro:property name="wheel_zoff"   value="0.0"/>
   <!-- wheel_xoff was 1.25. New geometry: rear=0, front=2.5 -->
   <!-- We will specify positions directly in macro calls or new properties -->
-  <xacro:property name="steer_limit"   value="0.51"/>
+  <xacro:property name="steer_limit"   value="0.9"/>
 
-  <!-- SENSORES (Shifted +1.25 in X) -->
-  <xacro:property name="camera_x" value="2.25"/>
+  <!-- SENSORES -->
+  <xacro:property name="camera_x" value="1.70"/>
   <xacro:property name="camera_y" value="0.00"/>
-  <xacro:property name="camera_z" value="1.70"/>
+  <xacro:property name="camera_z" value="1.80"/>
 
-  <xacro:property name="lidar_x" value="2.25"/>
+  <xacro:property name="lidar_x" value="1.50"/>
   <xacro:property name="lidar_y" value="0.00"/>
-  <xacro:property name="lidar_z" value="1.70"/>
+  <xacro:property name="lidar_z" value="2.10"/>
 
-  <xacro:property name="imu_x" value="0.00"/>
+  <xacro:property name="imu_x" value="-1.00"/>
   <xacro:property name="imu_y" value="0.00"/>
   <xacro:property name="imu_z" value="1.70"/>
 
-  <xacro:property name="gps_x" value="0.00"/>
+  <xacro:property name="gps_x" value="-1.20"/>
   <xacro:property name="gps_y" value="0.0"/>
   <xacro:property name="gps_z" value="1.70"/>
 
@@ -83,7 +83,8 @@
     <link name="base_link">
     <visual>
       <!-- Shifted origin +1.25 -->
-      <origin xyz="1.25 0 0.82" rpy="0 0 0"/>
+      <!-- Shifted origin to center -->
+      <origin xyz="0 0 0.82" rpy="0 0 0"/>
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}"/>
       </geometry>
@@ -95,7 +96,8 @@
           <box size="${base_length} ${base_width} ${base_height}"/>
         </geometry>
          <!-- Shifted origin +1.25 -->
-        <origin xyz="1.25 0.0 0.82" rpy="0 0 0"/>
+         <!-- Shifted origin to center -->
+        <origin xyz="0 0 0.82" rpy="0 0 0"/>
       </collision>
 
     <xacro:box_inertia m="${base_mass}" w="${base_width}" h="${base_height}" d="${base_length}"/>
@@ -224,13 +226,13 @@
   </xacro:macro>
 
   <!-- Instanciar ruedas -->
-  <!-- Traseras (Fijas) - AHORA EN X=0 (Eje Trasero) -->
-  <xacro:rear_wheel prefix="rear_left_wheel" x_pos="0.0" y_reflect="1"/>
-  <xacro:rear_wheel prefix="rear_right_wheel" x_pos="0.0" y_reflect="-1"/>
+  <!-- Traseras (Fijas) - AHORA EN X=-1.25 -->
+  <xacro:rear_wheel prefix="rear_left_wheel" x_pos="-1.25" y_reflect="1"/>
+  <xacro:rear_wheel prefix="rear_right_wheel" x_pos="-1.25" y_reflect="-1"/>
 
-  <!-- Delanteras (Ackermann) - AHORA EN X=2.5 (Distancia entre ejes) -->
-  <xacro:front_wheel prefix="front_left_wheel" x_pos="2.5"  y_reflect="1"/>
-  <xacro:front_wheel prefix="front_right_wheel" x_pos="2.5"  y_reflect="-1"/>
+  <!-- Delanteras (Ackermann) - AHORA EN X=1.25 -->
+  <xacro:front_wheel prefix="front_left_wheel" x_pos="1.25"  y_reflect="1"/>
+  <xacro:front_wheel prefix="front_right_wheel" x_pos="1.25"  y_reflect="-1"/>
 
   <!-- ===================== -->
   <!--   SENSORES SEPARADOS  -->

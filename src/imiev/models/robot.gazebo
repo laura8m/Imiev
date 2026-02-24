@@ -53,15 +53,17 @@
         <left_steering_joint>front_left_wheel_steering_joint</left_steering_joint>
         <right_steering_joint>front_right_wheel_steering_joint</right_steering_joint>
         
-        <wheel_separation>${base_width/2 + wheel_ygap}</wheel_separation> 
+        <wheel_separation>${base_width}</wheel_separation> <!-- 1.86m -->
+        <wheel_base>2.5</wheel_base>
         <wheel_radius>${wheel_radius}</wheel_radius>
         
-        <min_velocity>-10.0</min_velocity>
-        <max_velocity>10.0</max_velocity>
+        <min_velocity>0.0</min_velocity>
+        <max_velocity>2.5</max_velocity>
         <min_acceleration>-5.0</min_acceleration>
         <max_acceleration>5.0</max_acceleration>
         
         <topic>cmd_vel</topic>
+        <min_turning_radius>2.5</min_turning_radius>
         <!-- Note: Gazebo Ackermann plugin parameters can vary, this is a best-guess standard config -->
     </plugin>
     

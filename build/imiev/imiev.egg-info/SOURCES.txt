@@ -22,6 +22,13 @@ imiev/interactive_waypoint_follower.py
 imiev/logged_waypoint_follower.py
 imiev/route_follower.py
 imiev/route_logger.py
+imiev.egg-info/PKG-INFO
+imiev.egg-info/SOURCES.txt
+imiev.egg-info/dependency_links.txt
+imiev.egg-info/entry_points.txt
+imiev.egg-info/requires.txt
+imiev.egg-info/top_level.txt
+imiev.egg-info/zip-safe
 imiev/utils/__init__.py
 imiev/utils/gps_utils.py
 launch/dual_ekf_navsat.launch.py
@@ -32,7 +39,4 @@ launch/slam.launch.py
 models/robot.gazebo
 models/robot.xacro
 resource/imiev
-test/test_copyright.py
-test/test_flake8.py
-test/test_pep257.py
 worlds/sonoma_raceway.world
