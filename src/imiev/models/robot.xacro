@@ -27,7 +27,7 @@
   <xacro:property name="wheel_zoff"   value="0.0"/>
   <!-- wheel_xoff was 1.25. New geometry: rear=0, front=2.5 -->
   <!-- We will specify positions directly in macro calls or new properties -->
-  <xacro:property name="steer_limit"   value="0.9"/>
+  <xacro:property name="steer_limit"   value="0.55"/>  <!-- antes: 0.9 -->
 
   <!-- SENSORES -->
   <xacro:property name="camera_x" value="1.70"/>
@@ -154,7 +154,7 @@
       <origin xyz="${x_pos} ${y_reflect*(base_width/2 + wheel_ygap)} ${-wheel_zoff}" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit effort="10000" velocity="1000"/>
-      <dynamics damping="0.0" friction="0.0"/>
+      <dynamics damping="2.0" friction="0.5"/>  <!-- antes: 0.0 / 0.0 -->
     </joint>
   </xacro:macro>
 
@@ -183,7 +183,7 @@
       <origin xyz="${x_pos} ${y_reflect*(base_width/2 + wheel_ygap)} ${-wheel_zoff}" rpy="0 0 0"/>
       <axis xyz="0 0 1"/> <!-- Gira en Z -->
       <limit lower="${-steer_limit}" upper="${steer_limit}" effort="10000" velocity="5.0"/>
-      <dynamics damping="1.0" friction="1.0"/>
+      <dynamics damping="10.0" friction="2.0"/>  <!-- antes: 1.0 / 1.0 -->
     </joint>
 
     <!-- Link de la rueda -->

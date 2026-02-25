@@ -1,0 +1,21 @@
+[0.885s] Invoking command in '/home/insia/simulador_ws/imiev/build/imiev': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/insia/simulador_ws/imiev/build/imiev/build --no-deps symlink_data
+[1.245s] running develop
+[1.500s] running egg_info
+[1.525s] writing imiev.egg-info/PKG-INFO
+[1.525s] writing dependency_links to imiev.egg-info/dependency_links.txt
+[1.525s] writing entry points to imiev.egg-info/entry_points.txt
+[1.525s] writing requirements to imiev.egg-info/requires.txt
+[1.525s] writing top-level names to imiev.egg-info/top_level.txt
+[1.575s] reading manifest file 'imiev.egg-info/SOURCES.txt'
+[1.576s] writing manifest file 'imiev.egg-info/SOURCES.txt'
+[1.602s] running build_ext
+[1.602s] Creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev.egg-link (link to .)
+[1.602s] Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.603s] Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.603s] Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.603s] Installing route_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.603s] Installing route_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[1.603s] 
+[1.603s] Installed /home/insia/simulador_ws/imiev/build/imiev
+[1.603s] running symlink_data
+[1.631s] Invoked command in '/home/insia/simulador_ws/imiev/build/imiev' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/insia/simulador_ws/imiev/build/imiev/build --no-deps symlink_data

@@ -1,0 +1,19 @@
+running develop
+running egg_info
+writing imiev.egg-info/PKG-INFO
+writing dependency_links to imiev.egg-info/dependency_links.txt
+writing entry points to imiev.egg-info/entry_points.txt
+writing requirements to imiev.egg-info/requires.txt
+writing top-level names to imiev.egg-info/top_level.txt
+reading manifest file 'imiev.egg-info/SOURCES.txt'
+writing manifest file 'imiev.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev.egg-link (link to .)
+Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing route_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+Installing route_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+
+Installed /home/insia/simulador_ws/imiev/build/imiev
+running symlink_data
