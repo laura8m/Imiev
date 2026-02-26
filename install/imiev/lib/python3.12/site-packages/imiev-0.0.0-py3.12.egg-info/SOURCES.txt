@@ -22,6 +22,7 @@ imiev/interactive_waypoint_follower.py
 imiev/logged_waypoint_follower.py
 imiev/route_follower.py
 imiev/route_logger.py
+imiev/test_turning.py
 imiev/utils/__init__.py
 imiev/utils/gps_utils.py
 launch/dual_ekf_navsat.launch.py

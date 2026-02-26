@@ -34,7 +34,7 @@
   <xacro:property name="camera_y" value="0.00"/>
   <xacro:property name="camera_z" value="1.80"/>
 
-  <xacro:property name="lidar_x" value="1.50"/>
+  <xacro:property name="lidar_x" value="0.00"/>
   <xacro:property name="lidar_y" value="0.00"/>
   <xacro:property name="lidar_z" value="2.10"/>
 
@@ -51,7 +51,7 @@
   <!-- ===================== -->
   <xacro:macro name="box_inertia" params="m w h d">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.82" rpy="0 0 0"/>
       <mass value="${m}"/>
       <inertia ixx="${(m/12)*(h*h + d*d)}"
                iyy="${(m/12)*(w*w + d*d)}"

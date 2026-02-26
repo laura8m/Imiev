@@ -36,6 +36,7 @@ setup(
             'logged_waypoint_follower = imiev.logged_waypoint_follower:main',
             'route_logger = imiev.route_logger:main',
             'route_follower = imiev.route_follower:main',
+            'test_turning = imiev.test_turning:main',
         ],
     },
 )

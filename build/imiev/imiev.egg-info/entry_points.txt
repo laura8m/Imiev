@@ -4,3 +4,4 @@ interactive_waypoint_follower = imiev.interactive_waypoint_follower:main
 logged_waypoint_follower = imiev.logged_waypoint_follower:main
 route_follower = imiev.route_follower:main
 route_logger = imiev.route_logger:main
+test_turning = imiev.test_turning:main
