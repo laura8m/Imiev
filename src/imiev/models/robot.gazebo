@@ -63,7 +63,7 @@
         <max_acceleration>5.0</max_acceleration>
         
         <topic>cmd_vel</topic>
-        <min_turning_radius>4.1</min_turning_radius>  <!-- antes: 2.5 -->
+        <min_turning_radius>4.5</min_turning_radius>  <!-- Real i-MiEV -->
         <!-- Note: Gazebo Ackermann plugin parameters can vary, this is a best-guess standard config -->
     </plugin>
     
