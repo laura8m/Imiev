@@ -34,6 +34,7 @@
 /home/insia/simulador_ws/imiev/install/imiev/share/imiev/worlds/sonoma_raceway.world
 /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev/robot.xacro
 /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev/robot.gazebo
+/home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev/meshes/miev_all.stl
 /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info/PKG-INFO
 /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info/top_level.txt
 /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info/entry_points.txt

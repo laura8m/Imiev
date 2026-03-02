@@ -21,7 +21,7 @@ setup(
         (os.path.join(f'share/{package_name}/models/imiev'), glob('models/*.xacro')),
         (os.path.join(f'share/{package_name}/models/imiev'), glob('models/*.gazebo')),
         # Copiar STL
-        # (os.path.join(f'share/{package_name}/models/imiev/meshes'), glob('models/meshes/*.*')),
+        (os.path.join(f'share/{package_name}/models/imiev/meshes'), glob('models/imiev/meshes/*.*')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

@@ -33,6 +33,7 @@ launch/mapviz.launch.py
 launch/slam.launch.py
 models/robot.gazebo
 models/robot.xacro
+models/imiev/meshes/miev_all.stl
 resource/imiev
 test/test_copyright.py
 test/test_flake8.py

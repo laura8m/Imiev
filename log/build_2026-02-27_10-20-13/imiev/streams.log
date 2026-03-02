@@ -1,0 +1,68 @@
+[1.079s] Invoking command in '/home/insia/simulador_ws/imiev/build/imiev': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/insia/simulador_ws/imiev/build/imiev/build
+[1.421s] running develop
+[1.686s] Removing /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev.egg-link (link to .)
+[1.712s] Invoked command in '/home/insia/simulador_ws/imiev/build/imiev' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/insia/simulador_ws/imiev/build/imiev/build
+[1.713s] Invoking command in '/home/insia/simulador_ws/imiev/src/imiev': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/imiev build --build-base /home/insia/simulador_ws/imiev/build/imiev/build install --record /home/insia/simulador_ws/imiev/build/imiev/install.log --single-version-externally-managed install_data --force
+[2.024s] running egg_info
+[2.051s] writing ../../build/imiev/imiev.egg-info/PKG-INFO
+[2.051s] writing dependency_links to ../../build/imiev/imiev.egg-info/dependency_links.txt
+[2.051s] writing entry points to ../../build/imiev/imiev.egg-info/entry_points.txt
+[2.051s] writing requirements to ../../build/imiev/imiev.egg-info/requires.txt
+[2.051s] writing top-level names to ../../build/imiev/imiev.egg-info/top_level.txt
+[2.116s] reading manifest file '../../build/imiev/imiev.egg-info/SOURCES.txt'
+[2.117s] writing manifest file '../../build/imiev/imiev.egg-info/SOURCES.txt'
+[2.117s] running build
+[2.117s] running build_py
+[2.117s] copying imiev/route_follower.py -> /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev
+[2.120s] running install
+[2.126s] running install_lib
+[2.154s] creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.154s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/interactive_waypoint_follower.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.154s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/__init__.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.154s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/route_follower.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.154s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/logged_waypoint_follower.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.154s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/test_turning.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.155s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/gps_waypoint_logger.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.155s] creating /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils
+[2.155s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/utils/__init__.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils
+[2.155s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/utils/gps_utils.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils
+[2.155s] copying /home/insia/simulador_ws/imiev/build/imiev/build/lib/imiev/route_logger.py -> /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev
+[2.155s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/interactive_waypoint_follower.py to interactive_waypoint_follower.cpython-312.pyc
+[2.156s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/__init__.py to __init__.cpython-312.pyc
+[2.156s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/route_follower.py to route_follower.cpython-312.pyc
+[2.158s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/logged_waypoint_follower.py to logged_waypoint_follower.cpython-312.pyc
+[2.159s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/test_turning.py to test_turning.cpython-312.pyc
+[2.160s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/gps_waypoint_logger.py to gps_waypoint_logger.cpython-312.pyc
+[2.161s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils/__init__.py to __init__.cpython-312.pyc
+[2.161s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/utils/gps_utils.py to gps_utils.cpython-312.pyc
+[2.162s] byte-compiling /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev/route_logger.py to route_logger.cpython-312.pyc
+[2.163s] running install_data
+[2.163s] copying resource/imiev -> /home/insia/simulador_ws/imiev/install/imiev/share/ament_index/resource_index/packages
+[2.164s] copying package.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev
+[2.164s] copying launch/gps_waypoint_follower.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+[2.164s] copying launch/dual_ekf_navsat.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+[2.164s] copying launch/mapviz.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+[2.164s] copying launch/gazebo_model.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+[2.164s] copying launch/slam.launch.py -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/launch
+[2.164s] copying config/mapper_params_online_async.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[2.164s] copying config/nav2_no_map_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[2.164s] copying config/nav2_slam_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[2.165s] copying config/imiev_bridge.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[2.165s] copying config/dual_ekf_navsat_params.yaml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[2.165s] copying config/gps_wpf_demo.mvc -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config
+[2.166s] copying config/behavior_trees/navigate_through_poses_ackermann.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config/behavior_trees
+[2.166s] copying config/behavior_trees/navigate_to_pose_ackermann.xml -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/config/behavior_trees
+[2.166s] copying worlds/sonoma_raceway.world -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/worlds
+[2.166s] copying models/robot.xacro -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+[2.167s] copying models/robot.gazebo -> /home/insia/simulador_ws/imiev/install/imiev/share/imiev/models/imiev
+[2.167s] running install_egg_info
+[2.196s] Copying ../../build/imiev/imiev.egg-info to /home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages/imiev-0.0.0-py3.12.egg-info
+[2.197s] running install_scripts
+[2.365s] Installing gps_waypoint_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.365s] Installing interactive_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.365s] Installing logged_waypoint_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.365s] Installing route_follower script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.366s] Installing route_logger script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.368s] Installing test_turning script to /home/insia/simulador_ws/imiev/install/imiev/lib/imiev
+[2.370s] writing list of installed files to '/home/insia/simulador_ws/imiev/build/imiev/install.log'
+[2.403s] Invoked command in '/home/insia/simulador_ws/imiev/src/imiev' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/insia/simulador_ws/imiev/build/imiev/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/insia/simulador_ws/imiev/install/imiev/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/imiev build --build-base /home/insia/simulador_ws/imiev/build/imiev/build install --record /home/insia/simulador_ws/imiev/build/imiev/install.log --single-version-externally-managed install_data --force

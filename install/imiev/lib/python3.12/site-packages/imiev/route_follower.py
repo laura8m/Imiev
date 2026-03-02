@@ -128,30 +128,94 @@ class RouteFollower(Node):
         print("Waiting for Nav2 to be active...")
         self.navigator.waitUntilNav2Active(localizer='robot_localization')
 
-        print("Starting route following...")
-        self.navigator.followGpsWaypoints(geoposes)
+        # Coordenadas locales de cada waypoint para comparar distancias
+        local_targets = [self.lat_lon_to_local(p["latitude"], p["longitude"]) for p in self.gps_points]
 
-        while not self.navigator.isTaskComplete():
-            # Process ROS callbacks (important for publishers to work continuously)
-            rclpy.spin_once(self, timeout_sec=0.1)
-            
-            # Keep publishing markers to ensure they stay visible in RViz
-            self.publish_markers()
-            
-            feedback = self.navigator.getFeedback()
-            if feedback:
-                print(f'Progress: Point {feedback.current_waypoint + 1}/{len(self.gps_points)}')
-            
-            if not rclpy.ok():
-                self.navigator.cancelTask()
-                return
-            time.sleep(0.5)
+        current_wp = 0
+        total = len(geoposes)
 
-        result = self.navigator.getResult()
-        if result == TaskResult.SUCCEEDED:
-            print('Success!')
-        else:
-            print('Failed or canceled.')
+        # --- Parámetros de skip ---
+        skip_distance = 8.0        # Distancia al wp actual para considerar skip por proximidad (m)
+        stuck_timeout = 15.0       # Sin moverse durante X segundos → saltar
+        stuck_threshold = 0.5      # Movimiento mínimo para no estar "atascado" (m)
+
+        print(f"Siguiendo ruta ({total} waypoints)...")
+
+        while current_wp < total and rclpy.ok():
+            print(f'\n>>> Waypoint {current_wp + 1}/{total}')
+            self.navigator.followGpsWaypoints([geoposes[current_wp]])
+
+            # Timestamps para timeout y detección de atascamiento
+            last_move_time = time.time()
+            last_pos = self._get_robot_position()
+
+            while not self.navigator.isTaskComplete():
+                rclpy.spin_once(self, timeout_sec=0.1)
+                self.publish_markers()
+
+                if not rclpy.ok():
+                    self.navigator.cancelTask()
+                    return
+
+                now = time.time()
+                pos = self._get_robot_position()
+
+                # 1. Detección de robot atascado
+                if pos[0] is not None and last_pos[0] is not None:
+                    dist_moved = math.sqrt(
+                        (pos[0] - last_pos[0])**2 + (pos[1] - last_pos[1])**2)
+                    if dist_moved > stuck_threshold:
+                        last_pos = pos
+                        last_move_time = now
+                    elif (now - last_move_time) > stuck_timeout:
+                        print(f'🚫 Robot atascado en wp {current_wp + 1} '
+                              f'({stuck_timeout:.0f}s sin moverse), saltando...')
+                        self.navigator.cancelTask()
+                        time.sleep(0.5)
+                        break
+
+                # 2. Skip por proximidad: solo si ya estamos cerca del wp actual
+                if current_wp + 1 < total and pos[0] is not None:
+                    dist_curr = math.sqrt(
+                        (local_targets[current_wp][0] - pos[0])**2 +
+                        (local_targets[current_wp][1] - pos[1])**2)
+                    if dist_curr < skip_distance:
+                        dist_next = math.sqrt(
+                            (local_targets[current_wp + 1][0] - pos[0])**2 +
+                            (local_targets[current_wp + 1][1] - pos[1])**2)
+                        if dist_next < dist_curr:
+                            print(f'⏭️  Saltando wp {current_wp + 1} (más cerca del siguiente)')
+                            self.navigator.cancelTask()
+                            time.sleep(0.5)
+                            break
+
+                time.sleep(0.5)
+
+            result = self.navigator.getResult()
+            if result == TaskResult.SUCCEEDED:
+                print(f'✅ Waypoint {current_wp + 1} alcanzado')
+            elif result == TaskResult.CANCELED:
+                print(f'⏭️  Waypoint {current_wp + 1} saltado')
+            else:
+                print(f'⚠️  Waypoint {current_wp + 1} falló, continuando...')
+
+            current_wp += 1
+
+        print('\n🏁 Ruta completada!')
+
+    def _get_robot_position(self):
+        """Posición del robot (x, y) en frame map via TF."""
+        try:
+            from tf2_ros import Buffer, TransformListener
+            if not hasattr(self, '_tf_buffer'):
+                self._tf_buffer = Buffer()
+                self._tf_listener = TransformListener(self._tf_buffer, self)
+            t = self._tf_buffer.lookup_transform(
+                'map', 'base_footprint', rclpy.time.Time(),
+                timeout=rclpy.duration.Duration(seconds=0.5))
+            return t.transform.translation.x, t.transform.translation.y
+        except Exception:
+            return None, None
 
 
 def main():
