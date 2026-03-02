@@ -134,74 +134,59 @@ class RouteFollower(Node):
         current_wp = 0
         total = len(geoposes)
 
-        # --- Parámetros de skip ---
-        skip_distance = 8.0        # Distancia al wp actual para considerar skip por proximidad (m)
-        stuck_timeout = 15.0       # Sin moverse durante X segundos → saltar
+        # --- Parámetros de atasco ---
+        stuck_timeout = 25.0       # Sin moverse durante X segundos → abortar
         stuck_threshold = 0.5      # Movimiento mínimo para no estar "atascado" (m)
 
-        print(f"Siguiendo ruta ({total} waypoints)...")
+        print(f"Siguiendo ruta completa ({total} waypoints) vía Through Poses...")
+        
+        # Enviar TODA la ruta de golpe para que Nav2 fluya sin parar
+        self.navigator.followGpsWaypoints(geoposes)
 
-        while current_wp < total and rclpy.ok():
-            print(f'\n>>> Waypoint {current_wp + 1}/{total}')
-            self.navigator.followGpsWaypoints([geoposes[current_wp]])
+        last_move_time = time.time()
+        last_pos = self._get_robot_position()
 
-            # Timestamps para timeout y detección de atascamiento
-            last_move_time = time.time()
-            last_pos = self._get_robot_position()
+        while not self.navigator.isTaskComplete():
+            rclpy.spin_once(self, timeout_sec=0.1)
+            self.publish_markers()
 
-            while not self.navigator.isTaskComplete():
-                rclpy.spin_once(self, timeout_sec=0.1)
-                self.publish_markers()
+            if not rclpy.ok():
+                self.navigator.cancelTask()
+                return
 
-                if not rclpy.ok():
+            now = time.time()
+            pos = self._get_robot_position()
+
+            # Obtener y mostrar feedback de progreso
+            feedback = self.navigator.getFeedback()
+            if feedback and hasattr(feedback, 'number_of_poses_remaining'):
+                wp_current = total - feedback.number_of_poses_remaining
+                # Use carriage return `\r` to overwrite the same line en la consola
+                print(f'\r>>> Dirigiéndose al Waypoint {wp_current}/{total}  ', end='', flush=True)
+
+            # Detección de robot atascado
+            if pos[0] is not None and last_pos[0] is not None:
+                dist_moved = math.sqrt((pos[0] - last_pos[0])**2 + (pos[1] - last_pos[1])**2)
+                if dist_moved > stuck_threshold:
+                    last_pos = pos
+                    last_move_time = now
+                elif (now - last_move_time) > stuck_timeout:
+                    print(f'\n🚫 Robot atascado completamente '
+                          f'({stuck_timeout:.0f}s sin moverse), abortando ruta...')
                     self.navigator.cancelTask()
-                    return
+                    time.sleep(0.5)
+                    break
 
-                now = time.time()
-                pos = self._get_robot_position()
+            time.sleep(0.5)
 
-                # 1. Detección de robot atascado
-                if pos[0] is not None and last_pos[0] is not None:
-                    dist_moved = math.sqrt(
-                        (pos[0] - last_pos[0])**2 + (pos[1] - last_pos[1])**2)
-                    if dist_moved > stuck_threshold:
-                        last_pos = pos
-                        last_move_time = now
-                    elif (now - last_move_time) > stuck_timeout:
-                        print(f'🚫 Robot atascado en wp {current_wp + 1} '
-                              f'({stuck_timeout:.0f}s sin moverse), saltando...')
-                        self.navigator.cancelTask()
-                        time.sleep(0.5)
-                        break
-
-                # 2. Skip por proximidad: solo si ya estamos cerca del wp actual
-                if current_wp + 1 < total and pos[0] is not None:
-                    dist_curr = math.sqrt(
-                        (local_targets[current_wp][0] - pos[0])**2 +
-                        (local_targets[current_wp][1] - pos[1])**2)
-                    if dist_curr < skip_distance:
-                        dist_next = math.sqrt(
-                            (local_targets[current_wp + 1][0] - pos[0])**2 +
-                            (local_targets[current_wp + 1][1] - pos[1])**2)
-                        if dist_next < dist_curr:
-                            print(f'⏭️  Saltando wp {current_wp + 1} (más cerca del siguiente)')
-                            self.navigator.cancelTask()
-                            time.sleep(0.5)
-                            break
-
-                time.sleep(0.5)
-
-            result = self.navigator.getResult()
-            if result == TaskResult.SUCCEEDED:
-                print(f'✅ Waypoint {current_wp + 1} alcanzado')
-            elif result == TaskResult.CANCELED:
-                print(f'⏭️  Waypoint {current_wp + 1} saltado')
-            else:
-                print(f'⚠️  Waypoint {current_wp + 1} falló, continuando...')
-
-            current_wp += 1
-
-        print('\n🏁 Ruta completada!')
+        print() # Nueva línea al terminar el bucle del carriage return
+        result = self.navigator.getResult()
+        if result == TaskResult.SUCCEEDED:
+            print('✅ Ruta completada con éxito!')
+        elif result == TaskResult.CANCELED:
+            print('⏭️  Ruta cancelada de forma manual o por atasco')
+        else:
+            print('⚠️  La ruta finalizó con errores.')
 
     def _get_robot_position(self):
         """Posición del robot (x, y) en frame map via TF."""

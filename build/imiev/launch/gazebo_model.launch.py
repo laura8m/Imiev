@@ -1,1 +1,0 @@
-/home/insia/simulador_ws/imiev/src/imiev/launch/gazebo_model.launch.py
