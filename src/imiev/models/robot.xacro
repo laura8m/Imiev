@@ -51,7 +51,7 @@
   <!-- ===================== -->
   <xacro:macro name="box_inertia" params="m w h d">
     <inertial>
-      <origin xyz="0 0 0.61" rpy="0 0 0"/>
+      <origin xyz="0 0 0.76" rpy="0 0 0"/>
       <mass value="${m}"/>
       <inertia ixx="${(m/12)*(h*h + d*d)}"
                iyy="${(m/12)*(w*w + d*d)}"
@@ -94,7 +94,7 @@
         <geometry>
           <box size="${base_length} ${base_width} ${base_height}"/>
         </geometry>
-        <origin xyz="0 0 0.61" rpy="0 0 0"/>
+        <origin xyz="0 0 0.76" rpy="0 0 0"/>
       </collision>
 
     <xacro:box_inertia m="${base_mass}" w="${base_width}" h="${base_height}" d="${base_length}"/>

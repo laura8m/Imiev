@@ -8,7 +8,7 @@ import os
 import sys
 import time
 import math
-from imiev.utils.gps_utils import latLonYaw2Geopose
+from geometry_msgs.msg import PoseStamped
 
 
 class RouteFollower(Node):
@@ -28,27 +28,6 @@ class RouteFollower(Node):
             durability=rclpy.qos.DurabilityPolicy.TRANSIENT_LOCAL
         )
         self.marker_publisher = self.create_publisher(MarkerArray, '/route_markers', qos_profile)
-        
-        # Origin for Sonoma Raceway to convert lat/lon to local X/Y for visualization
-        self.origin_lat = 38.161479
-        self.origin_lon = -122.454630
-        self.earth_radius = 6371000.0
-
-    def lat_lon_to_local(self, lat, lon):
-        """
-        Simple lat/lon to local X/Y conversion for visualization
-        """
-        lat_rad = math.radians(lat)
-        lon_rad = math.radians(lon)
-        origin_lat_rad = math.radians(self.origin_lat)
-        origin_lon_rad = math.radians(self.origin_lon)
-
-        delta_lat = lat_rad - origin_lat_rad
-        delta_lon = lon_rad - origin_lon_rad
-
-        x = delta_lon * self.earth_radius * math.cos(origin_lat_rad)
-        y = delta_lat * self.earth_radius
-        return x, y
 
     def load_route(self):
         if not os.path.exists(self.route_file_path):
@@ -62,17 +41,34 @@ class RouteFollower(Node):
             self.get_logger().error("Empty route file.")
             return False
 
-        temp_gps = []
-        # Compile start, waypoints, and end
-        if "start" in data and data["start"]:
-            temp_gps.append(data["start"])
-        if "waypoints" in data and data["waypoints"]:
-            temp_gps.extend(data["waypoints"])
-        if "end" in data and data["end"]:
-            temp_gps.append(data["end"])
+        if "waypoints" not in data or not data["waypoints"]:
+            self.get_logger().error("No waypoints found in route file.")
+            return False
 
-        self.gps_points = temp_gps
-        self.get_logger().info(f"Loaded {len(self.gps_points)} points from route.")
+        raw_points = list(data["waypoints"].values())
+
+        # Filtrar puntos demasiado juntos (ruido por estar parados al grabar)
+        self.gps_points = []
+        min_distance = 0.5 # metros
+        
+        for pt in raw_points:
+            if not self.gps_points:
+                self.gps_points.append(pt)
+            else:
+                last_pt = self.gps_points[-1]
+                dist = math.sqrt((pt["pose"][0] - last_pt["pose"][0])**2 + (pt["pose"][1] - last_pt["pose"][1])**2)
+                if dist >= min_distance:
+                    self.gps_points.append(pt)
+                    
+        # Asegurarnos de añadir el punto final
+        if raw_points and raw_points[-1] != self.gps_points[-1]:
+            last_raw = raw_points[-1]
+            last_filtered = self.gps_points[-1]
+            dist = math.sqrt((last_raw["pose"][0] - last_filtered["pose"][0])**2 + (last_raw["pose"][1] - last_filtered["pose"][1])**2)
+            if dist > 0.1: # al menos 10 cm
+                self.gps_points.append(last_raw)
+
+        self.get_logger().info(f"Loaded {len(raw_points)} raw poses, filtered down to {len(self.gps_points)} valid waypoints.")
         
         # Initial publications to ensure symbols appear in Rviz
         for _ in range(5):
@@ -88,23 +84,47 @@ class RouteFollower(Node):
         """
         marker_array = MarkerArray()
         
+        # Add a LINE_STRIP to visualize the complete path natively
+        line_marker = Marker()
+        line_marker.header.frame_id = "map"
+        line_marker.header.stamp = self.get_clock().now().to_msg()
+        line_marker.ns = "route_line"
+        line_marker.id = 9999
+        line_marker.type = Marker.LINE_STRIP
+        line_marker.action = Marker.ADD
+        line_marker.scale.x = 0.15 # line width
+        line_marker.color.r = 1.0 # Yellow
+        line_marker.color.g = 1.0
+        line_marker.color.b = 0.0
+        line_marker.color.a = 0.8
+        
         for i, pt in enumerate(self.gps_points):
             marker = Marker()
             marker.header.frame_id = "map"
             marker.header.stamp = self.get_clock().now().to_msg()
-            marker.ns = "route"
+            marker.ns = "route_points"
             marker.id = i
             marker.type = Marker.SPHERE
             marker.action = Marker.ADD
             
-            x, y = self.lat_lon_to_local(pt["latitude"], pt["longitude"])
+            x = float(pt["pose"][0])
+            y = float(pt["pose"][1])
+            z = float(pt["pose"][2])
+            
             marker.pose.position.x = x
             marker.pose.position.y = y
-            marker.pose.position.z = 0.5
+            marker.pose.position.z = z
             
-            marker.scale.x = 1.0
-            marker.scale.y = 1.0
-            marker.scale.z = 1.0
+            # Add to line strip
+            p = Point()
+            p.x = x
+            p.y = y
+            p.z = z
+            line_marker.points.append(p)
+            
+            marker.scale.x = 0.3
+            marker.scale.y = 0.3
+            marker.scale.z = 0.3
             
             # Color coding: Green for start, Blue for end, Red for intermediate
             if i == 0: # Start
@@ -116,6 +136,7 @@ class RouteFollower(Node):
             
             marker_array.markers.append(marker)
             
+        marker_array.markers.append(line_marker)
         self.marker_publisher.publish(marker_array)
         self.get_logger().info("Published route markers to Rviz.")
 
@@ -123,70 +144,137 @@ class RouteFollower(Node):
         if not self.gps_points:
             return
 
-        geoposes = [latLonYaw2Geopose(p["latitude"], p["longitude"], p["yaw"]) for p in self.gps_points]
-
         print("Waiting for Nav2 to be active...")
         self.navigator.waitUntilNav2Active(localizer='robot_localization')
 
-        # Coordenadas locales de cada waypoint para comparar distancias
-        local_targets = [self.lat_lon_to_local(p["latitude"], p["longitude"]) for p in self.gps_points]
+        # Convert loaded poses to PoseStamped with dynamic orientations
+        poses = []
+        for i, pt in enumerate(self.gps_points):
+            pose = PoseStamped()
+            pose.header.frame_id = 'map'
+            pose.header.stamp = self.navigator.get_clock().now().to_msg()
+            
+            x = float(pt["pose"][0])
+            y = float(pt["pose"][1])
+            z = float(pt["pose"][2])
+            
+            pose.pose.position.x = x
+            pose.pose.position.y = y
+            pose.pose.position.z = z
+            
+            # Dinámicamente calcular la orientación para mirar al siguiente punto
+            if i < len(self.gps_points) - 1:
+                next_x = self.gps_points[i+1]["pose"][0]
+                next_y = self.gps_points[i+1]["pose"][1]
+                yaw = math.atan2(next_y - y, next_x - x)
+                pose.pose.orientation.x = 0.0
+                pose.pose.orientation.y = 0.0
+                pose.pose.orientation.z = math.sin(yaw / 2.0)
+                pose.pose.orientation.w = math.cos(yaw / 2.0)
+            else:
+                # Para el último punto respetamos la orientación grabada en el yaml
+                pose.pose.orientation.x = float(pt["orientation"][0])
+                pose.pose.orientation.y = float(pt["orientation"][1])
+                pose.pose.orientation.z = float(pt["orientation"][2])
+                pose.pose.orientation.w = float(pt["orientation"][3])
 
-        current_wp = 0
-        total = len(geoposes)
+            poses.append(pose)
 
-        # --- Parámetros de atasco ---
-        stuck_timeout = 25.0       # Sin moverse durante X segundos → abortar
-        stuck_threshold = 0.5      # Movimiento mínimo para no estar "atascado" (m)
+        # Main loop to resume route if aborted (e.g. waypoint blocked)
+        current_pose_index = 0
+        total_poses = len(poses)
+        stuck_timeout = 25.0
+        stuck_threshold = 0.5
 
-        print(f"Siguiendo ruta completa ({total} waypoints) vía Through Poses...")
-        
-        # Enviar TODA la ruta de golpe para que Nav2 fluya sin parar
-        self.navigator.followGpsWaypoints(geoposes)
+        while current_pose_index < total_poses:
+            remaining_poses = poses[current_pose_index:]
+            print(f"\n[ROUTE] Siguiendo ruta desde el waypoint {current_pose_index} ({len(remaining_poses)} waypoints restantes)...")
+            
+            self.navigator.goThroughPoses(remaining_poses)
+            
+            last_move_time = time.time()
+            last_pos = self._get_robot_position()
+            aborted_due_to_stuck = False
 
-        last_move_time = time.time()
-        last_pos = self._get_robot_position()
+            while not self.navigator.isTaskComplete():
+                rclpy.spin_once(self, timeout_sec=0.1)
+                self.publish_markers()
 
-        while not self.navigator.isTaskComplete():
-            rclpy.spin_once(self, timeout_sec=0.1)
-            self.publish_markers()
-
-            if not rclpy.ok():
-                self.navigator.cancelTask()
-                return
-
-            now = time.time()
-            pos = self._get_robot_position()
-
-            # Obtener y mostrar feedback de progreso
-            feedback = self.navigator.getFeedback()
-            if feedback and hasattr(feedback, 'number_of_poses_remaining'):
-                wp_current = total - feedback.number_of_poses_remaining
-                # Use carriage return `\r` to overwrite the same line en la consola
-                print(f'\r>>> Dirigiéndose al Waypoint {wp_current}/{total}  ', end='', flush=True)
-
-            # Detección de robot atascado
-            if pos[0] is not None and last_pos[0] is not None:
-                dist_moved = math.sqrt((pos[0] - last_pos[0])**2 + (pos[1] - last_pos[1])**2)
-                if dist_moved > stuck_threshold:
-                    last_pos = pos
-                    last_move_time = now
-                elif (now - last_move_time) > stuck_timeout:
-                    print(f'\n🚫 Robot atascado completamente '
-                          f'({stuck_timeout:.0f}s sin moverse), abortando ruta...')
+                if not rclpy.ok():
                     self.navigator.cancelTask()
-                    time.sleep(0.5)
+                    return
+
+                now = time.time()
+                pos = self._get_robot_position()
+
+                feedback = self.navigator.getFeedback()
+                if feedback and hasattr(feedback, 'number_of_poses_remaining'):
+                    # Poses remaining in the *current* request
+                    wp_current_local = len(remaining_poses) - feedback.number_of_poses_remaining
+                    # Global waypoint index
+                    wp_current = current_pose_index + wp_current_local
+                    
+                    print(f'\r>>> Dirigiéndose al Waypoint {wp_current}/{total_poses}  ', end='', flush=True)
+
+                if pos[0] is not None and last_pos[0] is not None:
+                    dist_moved = math.sqrt((pos[0] - last_pos[0])**2 + (pos[1] - last_pos[1])**2)
+                    if dist_moved > stuck_threshold:
+                        last_pos = pos
+                        last_move_time = now
+                    elif (now - last_move_time) > stuck_timeout:
+                        print(f'\n🚫 Robot atascado completamente ({stuck_timeout:.0f}s sin moverse). Abortando tramo actual...')
+                        self.navigator.cancelTask()
+                        aborted_due_to_stuck = True
+                        time.sleep(0.5)
+                        break
+
+                time.sleep(0.5)
+
+            print() # Nueva línea
+            result = self.navigator.getResult()
+            
+            if result == TaskResult.SUCCEEDED:
+                print('✅ Tarea de navegación completada con éxito!')
+                break # All done!
+                
+            elif result == TaskResult.CANCELED and not aborted_due_to_stuck:
+                print('⏭️  Ruta cancelada de forma manual')
+                break
+                
+            else:
+                print('⚠️  El planificador abortó (obstáculo irresoluble) o robot atascado.')
+                
+                # Determine where we are and skip to the NEXT feasible waypoint
+                current_robot_pos = self._get_robot_position()
+                if current_robot_pos[0] is None:
+                    print("No se pudo obtener la posición del robot para reanudar.")
                     break
-
-            time.sleep(0.5)
-
-        print() # Nueva línea al terminar el bucle del carriage return
-        result = self.navigator.getResult()
-        if result == TaskResult.SUCCEEDED:
-            print('✅ Ruta completada con éxito!')
-        elif result == TaskResult.CANCELED:
-            print('⏭️  Ruta cancelada de forma manual o por atasco')
-        else:
-            print('⚠️  La ruta finalizó con errores.')
+                    
+                rx, ry = current_robot_pos
+                
+                # Find closest waypoint ahead of us
+                closest_dist = float('inf')
+                closest_index = current_pose_index
+                
+                # Search only in remaining waypoints
+                for i in range(current_pose_index, total_poses):
+                    wp_x = poses[i].pose.position.x
+                    wp_y = poses[i].pose.position.y
+                    dist = math.sqrt((rx - wp_x)**2 + (ry - wp_y)**2)
+                    if dist < closest_dist:
+                        closest_dist = dist
+                        closest_index = i
+                
+                # We failed reaching/passing the closest one. Skip it and try the NEXT one.
+                next_index = closest_index + 1
+                
+                if next_index >= total_poses:
+                    print("❌ No quedan más waypoints accesibles. Fin de la ruta.")
+                    break
+                    
+                print(f"🔄 Saltando waypoint infactible. Reanudando desde waypoint {next_index}...")
+                current_pose_index = next_index
+                time.sleep(1.0) # Pause before retrying
 
     def _get_robot_position(self):
         """Posición del robot (x, y) en frame map via TF."""
