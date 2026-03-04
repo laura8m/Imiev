@@ -24,14 +24,24 @@
           </RecoveryNode>
         </RateController>
 
-        <!-- Seguimiento del path -->
-        <RecoveryNode number_of_retries="1" name="FollowPath">
-          <FollowPath path="{path}" controller_id="{selected_controller}" error_code_id="{follow_path_error_code}"/>
-          <Sequence>
-            <WouldAControllerRecoveryHelp error_code="{follow_path_error_code}"/>
-            <ClearEntireCostmap name="ClearLocalCostmap-Context" service_name="local_costmap/clear_entirely_local_costmap"/>
-          </Sequence>
-        </RecoveryNode>
+        <!-- Seguimiento del path con monitoreo de obstáculos en cercanía del goal -->
+        <ReactiveSequence name="MonitorAndFollowPath">
+          <PathLongerOnApproach path="{path}" prox_len="3.0" length_factor="2.0">
+            <RetryUntilSuccessful num_attempts="1">
+              <SequenceWithMemory name="CancelingControlAndWait">
+                <CancelControl name="ControlCancel"/>
+                <Wait wait_duration="5.0"/>
+              </SequenceWithMemory>
+            </RetryUntilSuccessful>
+          </PathLongerOnApproach>
+          <RecoveryNode number_of_retries="1" name="FollowPath">
+            <FollowPath path="{path}" controller_id="{selected_controller}" error_code_id="{follow_path_error_code}"/>
+            <Sequence>
+              <WouldAControllerRecoveryHelp error_code="{follow_path_error_code}"/>
+              <ClearEntireCostmap name="ClearLocalCostmap-Context" service_name="local_costmap/clear_entirely_local_costmap"/>
+            </Sequence>
+          </RecoveryNode>
+        </ReactiveSequence>
 
       </PipelineSequence>
 

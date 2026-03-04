@@ -187,10 +187,12 @@ class RouteFollower(Node):
         stuck_threshold = 0.5
 
         while current_pose_index < total_poses:
-            remaining_poses = poses[current_pose_index:]
-            print(f"\n[ROUTE] Siguiendo ruta desde el waypoint {current_pose_index} ({len(remaining_poses)} waypoints restantes)...")
+            # Use goToPose (NavigateToPose action) instead of goThroughPoses
+            # In order to allow dynamic obstacle avoidance and pausing near goals
+            pose_to_follow = poses[current_pose_index]
+            print(f"\n[ROUTE] Dirigiéndose al Waypoint {current_pose_index}/{total_poses}...")
             
-            self.navigator.goThroughPoses(remaining_poses)
+            self.navigator.goToPose(pose_to_follow)
             
             last_move_time = time.time()
             last_pos = self._get_robot_position()
@@ -207,14 +209,7 @@ class RouteFollower(Node):
                 now = time.time()
                 pos = self._get_robot_position()
 
-                feedback = self.navigator.getFeedback()
-                if feedback and hasattr(feedback, 'number_of_poses_remaining'):
-                    # Poses remaining in the *current* request
-                    wp_current_local = len(remaining_poses) - feedback.number_of_poses_remaining
-                    # Global waypoint index
-                    wp_current = current_pose_index + wp_current_local
-                    
-                    print(f'\r>>> Dirigiéndose al Waypoint {wp_current}/{total_poses}  ', end='', flush=True)
+                print(f'\r>>> En movimiento hacia Waypoint {current_pose_index}/{total_poses}  ', end='', flush=True)
 
                 if pos[0] is not None and last_pos[0] is not None:
                     dist_moved = math.sqrt((pos[0] - last_pos[0])**2 + (pos[1] - last_pos[1])**2)
@@ -234,46 +229,20 @@ class RouteFollower(Node):
             result = self.navigator.getResult()
             
             if result == TaskResult.SUCCEEDED:
-                print('✅ Tarea de navegación completada con éxito!')
-                break # All done!
+                print(f'\n✅ Waypoint {current_pose_index} alcanzado.')
+                current_pose_index += 1
+                if current_pose_index >= total_poses:
+                    print('\n🏁 Ruta completada con éxito!')
+                    break
                 
             elif result == TaskResult.CANCELED and not aborted_due_to_stuck:
-                print('⏭️  Ruta cancelada de forma manual')
+                print('\n⏭️  Ruta cancelada de forma manual')
                 break
                 
             else:
-                print('⚠️  El planificador abortó (obstáculo irresoluble) o robot atascado.')
-                
-                # Determine where we are and skip to the NEXT feasible waypoint
-                current_robot_pos = self._get_robot_position()
-                if current_robot_pos[0] is None:
-                    print("No se pudo obtener la posición del robot para reanudar.")
-                    break
-                    
-                rx, ry = current_robot_pos
-                
-                # Find closest waypoint ahead of us
-                closest_dist = float('inf')
-                closest_index = current_pose_index
-                
-                # Search only in remaining waypoints
-                for i in range(current_pose_index, total_poses):
-                    wp_x = poses[i].pose.position.x
-                    wp_y = poses[i].pose.position.y
-                    dist = math.sqrt((rx - wp_x)**2 + (ry - wp_y)**2)
-                    if dist < closest_dist:
-                        closest_dist = dist
-                        closest_index = i
-                
-                # We failed reaching/passing the closest one. Skip it and try the NEXT one.
-                next_index = closest_index + 1
-                
-                if next_index >= total_poses:
-                    print("❌ No quedan más waypoints accesibles. Fin de la ruta.")
-                    break
-                    
-                print(f"🔄 Saltando waypoint infactible. Reanudando desde waypoint {next_index}...")
-                current_pose_index = next_index
+                print(f'\n⚠️  El planificador abortó (obstáculo irresoluble) o robot atascado intentando llegar al Waypoint {current_pose_index}.')
+                print(f"🔄 Saltando waypoint {current_pose_index} por inaccesible. Reanudando desde waypoint {current_pose_index+1}...")
+                current_pose_index += 1
                 time.sleep(1.0) # Pause before retrying
 
     def _get_robot_position(self):
